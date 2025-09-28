@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { Sitter } from '@/types/sitter.types';
+import { Sitter, Review } from '@/types/sitter.types';
 import Footer from '@/components/Footer';
 import axios from 'axios';
 
@@ -219,15 +219,15 @@ export default function PetsitterSlug() {
               <div className="bg-card rounded-xl shadow-lg p-6">
                 <h2 className="text-xl font-semibold text-ink mb-4">Reviews</h2>
                 <div className="space-y-4">
-                  {sitter.reviews.slice(0, 3).map((review: Record<string, unknown>) => (
-                    <div key={review.id as string} className="border-l-4 border-brand pl-4 py-2">
+                  {sitter.reviews.slice(0, 3).map((review: Review) => (
+                    <div key={review.id} className="border-l-4 border-brand pl-4 py-2">
                       <div className="flex items-center gap-2 mb-2">
                         <div className="flex">
                           {[...Array(5)].map((_, i) => (
                             <span
                               key={i}
                               className={`text-sm ${
-                                i < (review.rating as number) ? 'text-yellow' : 'text-gray-4'
+                                i < review.rating ? 'text-yellow' : 'text-gray-4'
                               }`}
                             >
                               ★
@@ -235,10 +235,10 @@ export default function PetsitterSlug() {
                           ))}
                         </div>
                         <span className="text-xs text-muted-text">
-                          {new Date(review.created_at as string).toLocaleDateString('en-US')}
+                          {new Date(review.created_at).toLocaleDateString('en-US')}
                         </span>
                       </div>
-                      <p className="text-text text-sm">{review.comment as string}</p>
+                      <p className="text-text text-sm">{review.comment}</p>
                     </div>
                   ))}
                 </div>
