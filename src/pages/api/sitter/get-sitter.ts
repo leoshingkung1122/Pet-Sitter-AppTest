@@ -23,8 +23,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const offset = (pageNumber - 1) * limitNumber;
 
     // สร้าง WHERE conditions
-    let whereConditions: string[] = [];
-    let queryParams: any[] = [];
+    const whereConditions: string[] = [];
+    const queryParams: string[] = [];
     let paramIndex = 1;
 
     // 1) Search term (ชื่อ sitter หรือที่อยู่)
@@ -136,14 +136,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       prisma.$queryRawUnsafe(mainQuery, ...queryParams, limitNumber, offset)
     ]);
 
-    const totalCount = Number((countResult as any)[0].total_count);
+    const totalCount = Number((countResult as { total_count: string }[])[0].total_count);
     const totalPages = Math.ceil(totalCount / limitNumber);
 
     // Format results
-    const formattedResults = (sittersResult as any[]).map((sitter: any) => ({
+    const formattedResults = (sittersResult as Record<string, unknown>[]).map((sitter: Record<string, unknown>) => ({
       ...sitter,
       sitter_image: sitter.sitter_images || [],
-      sitter_pet_type: (sitter.pet_types || []).map((pt: any) => ({
+      sitter_pet_type: ((sitter.pet_types as Record<string, unknown>[]) || []).map((pt: Record<string, unknown>) => ({
         pet_type: { pet_type_name: pt.pet_type_name }
       })),
       averageRating: Number(sitter.average_rating) || 0
