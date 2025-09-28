@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "@/lib/prisma";
-import type { Prisma } from "@prisma/client";
+
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "GET") {
@@ -24,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // สร้าง WHERE conditions
     const whereConditions: string[] = [];
-    const queryParams: string[] = [];
+    const queryParams: (string | number)[] = [];
     let paramIndex = 1;
 
     // 1) Search term (ชื่อ sitter หรือที่อยู่)
@@ -76,12 +76,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // 4) Rating (ขั้นต่ำ)
     if (rating) {
       const minRating = Number(rating);
-      whereConditions.push(`(
-        SELECT AVG(r.rating)::numeric(3,2)
-        FROM review r 
-        WHERE r.sitter_id = s.id
-      ) >= $${paramIndex}`);
-      queryParams.push(minRating.toString());
+      whereConditions.push(`s.id IN (
+        SELECT sitter_id 
+        FROM review 
+        GROUP BY sitter_id 
+        HAVING AVG(rating) >= $${paramIndex}
+      )`);
+      queryParams.push(minRating);
       paramIndex++;
     }
 
