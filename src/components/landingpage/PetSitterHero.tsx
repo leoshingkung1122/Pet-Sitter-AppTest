@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import PrimaryButton from "@/components/buttons/primaryButton";
+import PrimaryButton from "@/components/buttons/PrimaryButton";
 import Link from "next/link";
 import { satoshi } from "@/fonts";
 
@@ -44,7 +44,7 @@ const PetSitterHero = () => {
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-1 justify-center items-center">
             {/* Become A Pet Sitter Button */}
             <Link
-              href="/register"
+              href="/auth/register"
               aria-label="Go to become a pet sitter page"
             >
               <button className="text-orange-5 font-semibold hover:text-orange-6 transition-colors duration-200 min-w-[200px] sm:min-w-[220px]">
@@ -53,10 +53,7 @@ const PetSitterHero = () => {
             </Link>
 
             {/* Find A Pet Sitter Button */}
-            <Link
-              href="/find-a-pet-sitter"
-              aria-label="Go to find a pet sitter page"
-            >
+            <Link href="/findpetsitter" aria-label="Go to find a pet sitter page">
               <PrimaryButton
                 text="Find a Pet Sitter"
                 textColor="white"

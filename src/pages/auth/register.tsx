@@ -4,7 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { useRouter } from "next/router";
 import { useState } from "react";
-import PrimaryButton from "@/components/buttons/primaryButton"
+import PrimaryButton from "@/components/buttons/PrimaryButton"
 import InputText from "@/components/input/InputText"
 import { validateEmail, validatePhone, validatePassword } from "@/utils/validate-register"
 import { RegisterForm } from "@/types/register.type"
@@ -281,7 +281,7 @@ export default function RegisterPage() {
           <p className="mt-6 text-center text-[16px] text-ink">
             Already have an account?{" "}
             <Link
-              href="auth/login"
+              href="/auth/login"
               className="text-orange-5 hover:underline"
             >
               Login

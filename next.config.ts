@@ -4,6 +4,9 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
 
+  images: {
+    domains: ['placehold.co', 'via.placeholder.com', 'example.com'],
+  },
 
   async rewrites() {
     return [
