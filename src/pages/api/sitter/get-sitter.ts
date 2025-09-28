@@ -81,7 +81,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         FROM review r 
         WHERE r.sitter_id = s.id
       ) >= $${paramIndex}`);
-      queryParams.push(minRating);
+      queryParams.push(minRating.toString());
       paramIndex++;
     }
 
