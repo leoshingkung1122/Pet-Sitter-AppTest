@@ -10,7 +10,7 @@ export default function LandingPage() {
   return (
     <>
     <div className="min-h-screen bg-white">
-    <Navbar />
+      <Navbar />
       <div className="container-1200">
         <HeroSection />
         <SearchSitter />
