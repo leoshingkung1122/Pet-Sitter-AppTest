@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Sitter, Review } from '@/types/sitter.types';
 import Footer from '@/components/Footer';
 import axios from 'axios';
+import Navbar from '@/components/navbar/Navbar';
 
 export default function PetsitterSlug() {
   const router = useRouter();
@@ -54,6 +55,7 @@ export default function PetsitterSlug() {
   if (loading) {
     return (
       <div className="min-h-screen bg-muted flex flex-col">
+        <Navbar />
         <div className="flex-1">
           <div className="container-1200 py-8">
             <div className="animate-pulse">
@@ -75,6 +77,7 @@ export default function PetsitterSlug() {
   if (error) {
     return (
       <div className="min-h-screen bg-muted flex flex-col">
+        <Navbar />
         <div className="flex-1">
           <div className="container-1200 py-8">
             <div className="text-center">
@@ -97,6 +100,7 @@ export default function PetsitterSlug() {
   if (!sitter) {
     return (
       <div className="min-h-screen bg-muted flex flex-col">
+        <Navbar />
         <div className="flex-1">
           <div className="container-1200 py-8">
             <div className="text-center">
@@ -118,6 +122,7 @@ export default function PetsitterSlug() {
 
   return (
     <div className="min-h-screen bg-muted flex flex-col">
+      <Navbar />
       <div className="flex-1">
         <div className="container-1200 py-8">
         {/* Header */}
