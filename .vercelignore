@@ -1,9 +1,5 @@
-# Ignore socket-server directory - it should be deployed separately to Railway
-socket-server/
-
 # Ignore documentation files
 *.md
-SOCKET_SEPARATION_*.md
 
 # Ignore development files
 .env.local
