@@ -161,12 +161,12 @@ function dataUrlToFile(dataUrl: string, filename = "pet.png"): File {
   if (!m) throw new Error("Invalid data URL");
   const mime = m[1] || "image/png";
   const b64 = m[2];
-  
+
   // ใช้ atob แปลง base64 เป็น binary string (ไม่ใช้ fetch)
   const bin = atob(b64);
   const bytes = new Uint8Array(bin.length);
   for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-  
+
   const blob = new Blob([bytes], { type: mime });
   return new File([blob], filename, { type: mime });
 }
@@ -222,8 +222,8 @@ function parseApiErrorMessage(payload: unknown): string | null {
 }
 
 /* =========================
- * 🔧 petService: ใช้ axios เรียก API ทั้งหมด
- * ⚠️ ชื่อฟังก์ชัน "fetchPet" เป็นแค่ชื่อ ไม่ได้ใช้ fetch API
+ *  petService: ใช้ axios เรียก API ทั้งหมด
+ * ชื่อฟังก์ชัน "fetchPet" เป็นแค่ชื่อ ไม่ได้ใช้ fetch API
  * จริงๆ ใช้ axios.get(), axios.put(), axios.post(), axios.delete()
  * ========================= */
 export const petService = {
@@ -283,3 +283,48 @@ export const petService = {
     }
   },
 };
+
+/*
+ Form Input Helpers
+ */
+
+/**
+ * Sanitize age input - only digits, max 3 characters (0-999)
+ */
+export const sanitizeAgeInput = (value: string): string => {
+  return value.replace(/\D+/g, "").slice(0, 3);
+};
+
+/**
+ * Sanitize weight input - allow numbers and single decimal point
+ */
+/**
+ * Sanitize weight input - allow numbers and single decimal point
+ * Max weight: 100 kg
+ */
+export const sanitizeWeightInput = (value: string): string => {
+  const cleaned = value
+    .replace(/,/g, "")
+    .replace(/[^\d.]/g, "")
+    .replace(/^(\d*\.\d*).*$/, "$1"); // เหลือจุดเดียว
+  
+  // แปลงเป็นตัวเลขเพื่อเช็คค่า
+  const num = parseFloat(cleaned);
+  
+  // ถ้าเกิน 100 ให้คืนค่า "100"
+  if (!isNaN(num) && num > 100) {
+    return "100";
+  }
+  
+  return cleaned;
+};
+
+/**
+ * Convert File to base64 data URL (for form preview)
+ */
+export const fileToDataURL = (file: File): Promise<string> =>
+  new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(typeof reader.result === "string" ? reader.result : "");
+    reader.readAsDataURL(file);
+  });

@@ -1,0 +1,27 @@
+# Ignore socket-server directory - it should be deployed separately to Railway
+socket-server/
+
+# Ignore documentation files
+*.md
+SOCKET_SEPARATION_*.md
+
+# Ignore development files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore build artifacts
+.next/
+dist/
+build/
+
+# Ignore logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
