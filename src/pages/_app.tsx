@@ -5,6 +5,8 @@ import { SessionProvider } from "next-auth/react";
 import { useRouter } from "next/router";
 import Navbar from "@/components/navbar/Navbar";
 import { SocketProvider } from "@/components/chat/SocketProvider";
+import MessageNotification from "@/components/chat/MessageNotification";
+import PageToaster from "@/components/ui/PageToaster";
 import { satoshi, notoThai } from "@/fonts"; 
 const NAV_HIDE_ROUTES = new Set([
   "/login",
@@ -44,6 +46,10 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
         <div className={`${satoshi.variable} ${notoThai.variable}`}>
           {showNavbar && <Navbar />}
           <Component {...pageProps} />
+          {/* แสดง notification เมื่อมีข้อความใหม่ */}
+          <MessageNotification />
+          {/* เพิ่ม PageToaster เพื่อให้ toast แสดงได้ทั่วทั้งแอป */}
+          <PageToaster />
         </div>
       </SocketProvider>
     </SessionProvider>

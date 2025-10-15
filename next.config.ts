@@ -3,15 +3,6 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
-  
-  // Exclude socket-server from build
-  webpack: (config: any) => {
-    config.watchOptions = {
-      ...config.watchOptions,
-      ignored: ['**/socket-server/**', '**/node_modules/**'],
-    };
-    return config;
-  },
 
   images: {
     formats: ['image/avif', 'image/webp'],

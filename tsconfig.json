@@ -19,5 +19,5 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/lib/prisma.ts"],
-  "exclude": ["node_modules", "socket-server"]
+  "exclude": ["node_modules"]
 }

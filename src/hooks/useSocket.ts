@@ -35,22 +35,19 @@ export const useSocket = () => {
       
       const connectSocketWithRetry = async () => {
         try {
-          // เช็คว่า socket server instance ถูกสร้างแล้วหรือยัง
+          // เช็คว่า socket server พร้อมใช้งานหรือยัง
           const isServerReady = await checkSocketServerStatus();
           
           if (!isServerReady) {
-            // ถ้า server instance ยังไม่ถูกสร้าง แสดง loading
+            // ถ้า server ยังไม่พร้อม แสดง loading
             setIsWaitingForSocket(true);
             setIsSocketReady(false);
             
-            // เรียก API เพื่อกระตุ้นให้สร้าง socket server instance
-            await axios.get('/api/chat/socket');
-            
-            // รอสักครู่เพื่อให้ server instance ถูกสร้างเสร็จ
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            // รอให้ server พร้อม
+            await new Promise(resolve => setTimeout(resolve, 2000));
           }
           
-          // สร้าง socket connection (ไม่แสดง loading ในขั้นตอนนี้)
+          // สร้าง socket connection
           socketRef.current = connectSocket(session.user.id);
           
           setIsSocketReady(true);
